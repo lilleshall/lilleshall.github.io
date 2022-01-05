@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano version="1.19-pr16">
+
+    
+  <!-- Spot Style - Default Point Spot Style -->
+
+
+  <style name="IconDefaultPointSpotStyle"
+         url="%FIRSTXML%/spots/hotspot_plan_user_defaultpoint0.png"
+         visible="false"
+         edge="center"
+         onloaded="showPermanentTooltip(all);"
+
+
+         />
+
+
+
+<!-- ********** -->
+<!-- Circles Control Bar -->
+<!-- id : CirclesControlBar -->
+<!-- ********** -->
+
+  <krpano CirclesControlBarbarbuilt="false" CirclesControlBarbackgroundwidthwhenclosed="0" CirclesControlBarbackgroundwidthwhenopened="0" CirclesControlBarIsOpened="false" />
+  <events name="CirclesControlBarevents" 
+    onxmlcomplete="CirclesControlBarbuildMenuBar();" 
+
+
+    keep="true" />
+
+
+
+  <action name="CirclesControlBarbuildMenuBar">
+    ifnot (CirclesControlBarbarbuilt, CirclesControlBarbuildMenu(); set(CirclesControlBarbarbuilt, true););
+  </action>
+
+  <style name="CirclesControlBar_btn_style"
+         keep="true"
+         edge="right"
+         align="right"
+         x="0" y="0"
+         width="40" height="40"
+         crop="0|0|60|60"
+         onovercrop="0|60|60|60"
+         ondowncrop="0|120|60|60"
+         onhover="showTooltip('plugin', CirclesControlBarmenuTooltipStyle, bottom);"
+         onout="hideTooltip();"
+         />
+  <style name="CirclesControlBar_btn_style_off"
+         keep="true"
+         edge="right"
+         align="right"
+         x="0" y="0"
+         width="40" height="40"
+         onhover="showTooltip('plugin', CirclesControlBarmenuTooltipStyle, bottom);"
+         onout="hideTooltip();"
+         />
+
+  <layer name="CirclesControlBar_menu_bg"
+         keep="true"
+         type="container"
+         zorder="1"
+         width="40"
+         height="40"
+         align="bottom"
+         x="0" y="40"
+         maskchildren="true"
+         rotate="0"
+         visible="false"
+         >
+
+
+    <layer name="CirclesControlBarbtn_home"
+           url="%FIRSTXML%/graphics/circlescontrolbar/btn_home.png"
+           style="CirclesControlBar_btn_style"
+           onclick="CirclesControlBarbtn_home_action();"
+           visible="false"
+           tooltip="CirclesControlBarhomeTip"
+           />
+
+
+
+
+
+
+
+
+
+ </layer>
+
+    <action name="CirclesControlBarbtn_home_action">
+      mainloadscene(pano22);
+    </action>
+
+
+
+
+
+  <action name="CirclesControlBarhideMenuControls">
+    set(CirclesControlBarIsOpened, false);
+
+
+set(layer[CirclesControlBarbtn_home].visible, false);
+
+
+
+
+
+
+
+
+	set(layer[CirclesControlBar_menu_bg].width, get(CirclesControlBarbackgroundwidthwhenclosed));
+
+	set(layer[CirclesControlBar_menu_bg].visible, true);
+  </action>
+  <action name="CirclesControlBarshowMenuControls">
+    set(CirclesControlBarIsOpened, true);
+	set(layer[CirclesControlBar_menu_bg].visible, true);
+
+
+set(layer[CirclesControlBarbtn_home].visible, true);
+
+
+
+
+
+
+
+    set(layer[CirclesControlBar_menu_bg].width, get(CirclesControlBarbackgroundwidthwhenopened));
+  </action>
+
+
+
+
+
+
+<layer name="CirclesControlBarmenuTooltipStyle"
+	keep="true"
+	enabled="false"
+	capture="false"
+	url="%FIRSTXML%/graphics/textfield.swf"
+	align="center"
+	background="false"
+	border="false"
+	css="color:#ffffff;font-family:Helvetica;font-weight:bold;font-size:14px;text-align:left;"
+	height="20"
+	autoheight="true"
+	autowidth="auto"
+	xoffset="0"
+	yoffset="0"
+	padding="2"
+	selectable="false"
+	zorder="0"
+	visible="false"
+	html=""
+	edge="bottom"
+/>
+  <action name="CirclesControlBarbuildMenu">
+    
+    set(CirclesControlBarbutton_pos, 0);
+
+
+
+
+
+
+
+
+
+
+
+        set(layer[CirclesControlBarbtn_home].x, get(CirclesControlBarbutton_pos));
+        inc(CirclesControlBarbutton_pos, 45);
+
+
+
+      dec(CirclesControlBarbutton_pos, 5);
+
+      set(CirclesControlBarbackgroundwidthwhenopened, get(CirclesControlBarbutton_pos));
+
+
+    
+      set(layer[CirclesControlBar_menu_bg].width, get(CirclesControlBarbackgroundwidthwhenopened));
+	
+	
+	
+    </action>
+
+	<events name="CirclesControlBarStartTourEvents" onTourStart="CirclesControlBarCallOnStartTour();" keep="true" />
+	
+	<action name="CirclesControlBarCallOnStartTour">
+		
+		CirclesControlBarshowMenuControls();
+	</action>
+
+
+
+</krpano>
